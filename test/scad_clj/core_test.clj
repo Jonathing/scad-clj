@@ -1,6 +1,7 @@
 (ns scad-clj.core-test
   (:require [clojure.test :refer :all]
-            [scad-clj.model :as model]))
+            [scad-clj.model :as model]
+            [scad-clj.scad :as scad]))
 
 (deftest polymorphic-offset
   (testing "Numeric offset"
@@ -15,3 +16,12 @@
   (testing "Hash-map offset, composite, variary"
     (is (= (model/offset {:delta 3 :chamfer true} ::subject0 ::subject1)
            '(:offset {:r nil :delta 3 :chamfer true} ::subject0 ::subject1)))))
+
+(deftest doc
+  (testing "Single argument"
+    (is (= "// simple doc\n" (scad/write-scad `(:doc ("simple doc"))))))
+  (testing "Multiple arguments"
+    (is (= "// value of x is 42\n" (scad/write-scad `(:doc ("value of x is" 42))))))
+  (testing "Multiple lines"
+    (is (= "// this doc appears\n// on two lines\n"
+           (scad/write-scad `(:doc ("this doc appears\non two lines")))))))
