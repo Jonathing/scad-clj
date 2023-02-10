@@ -29,7 +29,7 @@
 (def ^:dynamic *fa* false)
 (def ^:dynamic *fn* false)
 (def ^:dynamic *fs* false)
-(def ^:dynamic *center* true)
+(def ^:dynamic *center* false)
 
 (defn with-f* [f x block]
   `(binding [~f ~x]
