@@ -1,5 +1,5 @@
 (ns scad-clj.scad
-  (:require [clojure.string :refer [join]]
+  (:require [clojure.string :refer [join split-lines]]
             [scad-clj.model :refer [rad->deg]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -51,6 +51,10 @@
 
 (defn map-to-arg-string [m]
   (join ", " (map (fn [[k v]] (str (name k) "=" (make-arguments [v])) ) m)))
+
+(defmethod write-expr :doc [depth [form txt]]
+  (let [lines (split-lines (join " " (map str txt)))]
+    (mapcat (fn [line] (list (indent depth) "// " line "\n")) lines)))
 
 (defmethod write-expr :include [depth [form {:keys [library]}]]
   (list (indent depth) "include <" library">\n"))

@@ -244,6 +244,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; text
 
+(defn doc [& text]
+  "Output some doc text to the generated SCAD."
+  `(:doc ~text))
+
 (defn text [text & {:as args}]
   (let [args (merge {:text text}
                     (if *fn* {:fn *fn*})
